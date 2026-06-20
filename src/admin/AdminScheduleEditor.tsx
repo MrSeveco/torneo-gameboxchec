@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { X, Edit2, Trash2, Save, Plus, Calendar, Clock, AlignLeft, Info } from 'lucide-react';
-import type { ScheduleItem } from '../types/tournament';
+import type { ScheduleItem, ScheduleItemType, ScheduleItemStatus } from '../types/tournament';
 
 interface Props {
   data: ReturnType<typeof import('../hooks/useTournamentData').useTournamentData>;
 }
 
-const SCHEDULE_TYPES = ['Partido', 'Logística', 'Reunión', 'Ceremonia', 'Otro'];
-const SCHEDULE_STATUSES = ['Pendiente', 'Comité', 'Completado', 'Cancelado', 'Reprogramado'];
+const SCHEDULE_TYPES: ScheduleItemType[] = ['Partido', 'Logística', 'Entrega de consola', 'Recogida de consola', 'Eliminatoria', 'Final', 'Comité'];
+const SCHEDULE_STATUSES: ScheduleItemStatus[] = ['Listo', 'Requiere consola', 'Requiere membresía', 'Requiere consola + membresía', 'Autónomo', 'Pendiente', 'Comité', 'Finalizado'];
 
 export default function AdminScheduleEditor({ data }: Props) {
   const { schedule, updateSection } = data;
@@ -108,7 +108,7 @@ export default function AdminScheduleEditor({ data }: Props) {
                   </span>
                   <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
                     item.status === 'Pendiente' ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' :
-                    item.status === 'Completado' ? 'bg-[var(--color-gamebox-green)]/10 text-[var(--color-gamebox-green)] border-[var(--color-gamebox-green)]/20' :
+                    item.status === 'Finalizado' ? 'bg-[var(--color-gamebox-green)]/10 text-[var(--color-gamebox-green)] border-[var(--color-gamebox-green)]/20' :
                     'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
                   }`}>
                     {item.status}
@@ -209,7 +209,7 @@ export default function AdminScheduleEditor({ data }: Props) {
                   <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Tipo de Evento</label>
                   <select 
                     value={formData.type || ''} 
-                    onChange={e => setFormData({...formData, type: e.target.value})}
+                    onChange={e => setFormData({...formData, type: e.target.value as ScheduleItemType})}
                     className="w-full bg-[var(--color-surface)] border border-[var(--color-surface-alt)] rounded-lg px-3 py-2 text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-chec-cyan)]"
                   >
                     {SCHEDULE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -219,7 +219,7 @@ export default function AdminScheduleEditor({ data }: Props) {
                   <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Estado</label>
                   <select 
                     value={formData.status || ''} 
-                    onChange={e => setFormData({...formData, status: e.target.value})}
+                    onChange={e => setFormData({...formData, status: e.target.value as ScheduleItemStatus})}
                     className="w-full bg-[var(--color-surface)] border border-[var(--color-surface-alt)] rounded-lg px-3 py-2 text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-chec-cyan)]"
                   >
                     {SCHEDULE_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}

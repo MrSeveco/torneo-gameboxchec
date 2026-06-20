@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Edit2, Trash2, Save, Plus, Users } from 'lucide-react';
-import type { TournamentGroup, GroupStatus, Participant } from '../types/tournament';
+import type { TournamentGroup, GroupStatus } from '../types/tournament';
 
 interface Props {
   data: ReturnType<typeof import('../hooks/useTournamentData').useTournamentData>;

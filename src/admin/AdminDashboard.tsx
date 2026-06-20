@@ -12,7 +12,6 @@ import AdminGroupsEditor from './AdminGroupsEditor';
 import AdminBracketEditor from './AdminBracketEditor';
 import AdminMatchesEditor from './AdminMatchesEditor';
 import AdminScheduleEditor from './AdminScheduleEditor';
-import GroupPanel from '../components/tournament/GroupPanel';
 import ResultsTable from '../components/tournament/ResultsTable';
 
 export default function AdminDashboard({ onExit }: { onExit: () => void }) {

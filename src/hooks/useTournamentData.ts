@@ -135,7 +135,8 @@ export function useTournamentData() {
     setState({
       ...initialTournamentData,
       hasUnsavedChanges: false,
-      hasLocalData: false
+      hasLocalData: false,
+      isLoading: false
     });
   }, []);
 
