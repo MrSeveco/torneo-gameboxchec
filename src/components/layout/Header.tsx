@@ -1,4 +1,4 @@
-import { Menu, X, Shield, LogOut, ShieldAlert } from 'lucide-react';
+import { Menu, X, Shield, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import checLogo from '../../assets/chec.svg';
 import gameboxLogo from '../../assets/gamebox.png';
