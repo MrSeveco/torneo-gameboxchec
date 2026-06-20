@@ -1,17 +1,20 @@
+import checLogo from '/src/assets/chec.svg';
+import gameboxLogo from '/src/assets/gamebox.png';
+
 export default function Footer() {
   return (
     <footer className="bg-[var(--color-bg-alt)] border-t border-[var(--color-surface-alt)] mt-20">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mb-8 gap-6 opacity-80 hover:opacity-100 transition-all duration-300">
-          <img
-            src="/src/assets/chec.svg"
-            alt="Logo CHEC"
-            className="h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          <img 
+            src={checLogo}
+            alt="Logo CHEC" 
+            className="h-12 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
-          <img
-            src="/src/assets/gamebox.png"
-            alt="Logo GameBox"
-            className="h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          <img 
+            src={gameboxLogo}
+            alt="Logo GameBox" 
+            className="h-12 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
         </div>
         <div className="mt-8 md:mt-0 flex flex-col items-center">

@@ -1,5 +1,7 @@
-import { Menu, X, Shield, LogOut } from 'lucide-react';
+import { Menu, X, Shield, LogOut, ShieldAlert } from 'lucide-react';
 import { useState } from 'react';
+import checLogo from '../../assets/chec.svg';
+import gameboxLogo from '../../assets/gamebox.png';
 
 interface HeaderProps {
   isAdmin?: boolean;
@@ -32,13 +34,13 @@ export default function Header({ isAdmin = false, onLogout }: HeaderProps) {
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center gap-4">
             <img
-              src="/src/assets/chec.svg"
+              src={checLogo}
               alt="Logo CHEC"
               className="h-10 sm:h-12 w-auto object-contain drop-shadow-md"
             />
             <div className="h-8 w-px bg-[var(--color-surface-alt)]"></div>
             <img
-              src="/src/assets/gamebox.png"
+              src={gameboxLogo}
               alt="Logo GameBox"
               className="h-10 sm:h-12 w-auto object-contain shadow-sm"
             />

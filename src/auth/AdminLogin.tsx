@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { supabase } from '../config/supabaseClient';
 import { Lock, ArrowLeft, AlertCircle } from 'lucide-react';
+import checLogo from '../assets/chec.svg';
+import gameboxLogo from '../assets/gamebox.png';
 
 interface AdminLoginProps {
   onSuccess: () => void;
@@ -44,13 +46,13 @@ export default function AdminLogin({ onSuccess, onCancel }: AdminLoginProps) {
 
         <div className="flex justify-center items-center mb-6 gap-4">
           <img
-            src="/src/assets/chec.svg"
+            src={checLogo}
             alt="Logo CHEC"
             className="h-12 w-auto object-contain"
           />
           <div className="h-10 w-px bg-[var(--color-surface-alt)]"></div>
           <img
-            src="/src/assets/gamebox.png"
+            src={gameboxLogo}
             alt="Logo GameBox"
             className="h-12 w-auto object-contain"
           />
