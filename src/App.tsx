@@ -65,7 +65,7 @@ function App() {
   };
 
   const renderPublicView = (isAdmin = false) => (
-    <main>
+    <main id="inicio">
       {!isAdmin && <Hero config={config} stats={stats} />}
 
       <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 ${isAdmin ? 'py-6' : 'py-16'}`}>
@@ -116,7 +116,7 @@ function App() {
           <>
             <section id="cronograma" className="scroll-mt-24">
               <SectionTitle title="Cronograma Oficial" subtitle="Horarios, logística y asignación de consolas." />
-              <Schedule schedule={schedule} />
+              <Schedule schedule={schedule} matches={matches} participants={participants} groups={groups} />
             </section>
 
             <section id="reglamento" className="scroll-mt-24">
@@ -144,11 +144,13 @@ function App() {
         onLogout={handleLogout}
       />
 
-      {currentView === 'admin' ? (
-        isAdminAuth ? renderPublicView(true) : <AdminLogin onSuccess={handleAdminSuccess} onCancel={() => window.location.hash = '#home'} />
-      ) : (
-        renderPublicView(false)
-      )}
+      <div>
+        {currentView === 'admin' ? (
+          isAdminAuth ? renderPublicView(true) : <AdminLogin onSuccess={handleAdminSuccess} onCancel={() => window.location.hash = '#home'} />
+        ) : (
+          renderPublicView(false)
+        )}
+      </div>
 
       <Footer />
     </div>

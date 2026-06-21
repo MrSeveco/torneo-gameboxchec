@@ -29,7 +29,7 @@ export default function Header({ isAdmin = false, onLogout }: HeaderProps) {
   const navLinks = isAdmin ? adminNavLinks : publicNavLinks;
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--color-bg-primary)]/90 backdrop-blur-md border-b border-[var(--color-surface-alt)]">
+    <header className="fixed top-0 w-full z-50 bg-[var(--color-bg-primary)]/90 backdrop-blur-md border-b border-[var(--color-surface-alt)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center gap-4">

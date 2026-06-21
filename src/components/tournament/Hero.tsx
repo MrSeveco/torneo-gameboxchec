@@ -17,7 +17,7 @@ export default function Hero({ config, stats }: HeroProps) {
         <div className="absolute left-1/4 bottom-0 w-1/3 h-1/2 bg-[var(--color-gamebox-green)]/5 blur-[80px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-24 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-[var(--color-chec-cyan)]/10 text-[var(--color-chec-cyan)] text-sm font-bold tracking-wider mb-6 border border-[var(--color-chec-cyan)]/20 animate-pulse">
             <span className="w-2 h-2 rounded-full bg-[var(--color-chec-cyan)]" />

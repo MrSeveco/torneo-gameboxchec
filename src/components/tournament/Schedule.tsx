@@ -1,14 +1,67 @@
-import { useState, useMemo } from 'react';
-import type { ScheduleItem } from '../../types/tournament';
+import { useState, useMemo, useEffect } from 'react';
+import type { ScheduleItem, Match, Participant, TournamentGroup, ScheduleItemStatus } from '../../types/tournament';
 import { Clock, Monitor, AlertCircle } from 'lucide-react';
 
 interface ScheduleProps {
   schedule: ScheduleItem[];
+  matches?: Match[];
+  participants?: Participant[];
+  groups?: TournamentGroup[];
 }
 
-export default function Schedule({ schedule }: ScheduleProps) {
-  const dates = useMemo(() => Array.from(new Set(schedule.map(s => s.date))), [schedule]);
+export default function Schedule({ schedule, matches = [], participants = [], groups = [] }: ScheduleProps) {
+  const allScheduleItems = useMemo(() => {
+    const combined = [...schedule];
+    
+    matches.forEach(match => {
+      // Solo partidos programados
+      if (!match.date || !match.time) return;
+      
+      const pA = participants.find(p => p.id === match.playerAId);
+      const pB = participants.find(p => p.id === match.playerBId);
+      const pAName = pA ? pA.name : 'Por definir';
+      const pBName = pB ? pB.name : 'Por definir';
+      
+      const group = groups.find(g => g.id === match.groupId);
+      const groupName = group ? group.name : match.round;
+      
+      let mappedStatus: ScheduleItemStatus = 'Pendiente';
+      if (match.status === 'Finalizado' || match.status === 'W.O.') mappedStatus = 'Finalizado';
+      
+      let formattedDate = match.date;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(match.date)) {
+        const [, month, day] = match.date.split('-');
+        const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        formattedDate = `${parseInt(day, 10)} de ${months[parseInt(month, 10) - 1]}`;
+      }
+      
+      combined.push({
+        id: `match-${match.id}`,
+        date: formattedDate,
+        time: match.time,
+        title: `${pAName} VS ${pBName}`,
+        type: 'Partido',
+        status: mappedStatus,
+        logistics: '',
+        notes: `${groupName} | Consola: ${match.platform}`
+      });
+    });
+    
+    // Ordenar cronológicamente
+    return combined.sort((a, b) => {
+      if (a.date !== b.date) return a.date.localeCompare(b.date);
+      return a.time.localeCompare(b.time);
+    });
+  }, [schedule, matches, participants, groups]);
+
+  const dates = useMemo(() => Array.from(new Set(allScheduleItems.map(s => s.date))), [allScheduleItems]);
   const [activeDate, setActiveDate] = useState(dates[0] || '');
+
+  useEffect(() => {
+    if (dates.length > 0 && (!activeDate || !dates.includes(activeDate))) {
+      setActiveDate(dates[0]);
+    }
+  }, [dates, activeDate]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -27,7 +80,7 @@ export default function Schedule({ schedule }: ScheduleProps) {
     }
   };
 
-  const filteredSchedule = schedule.filter(s => s.date === activeDate);
+  const filteredSchedule = allScheduleItems.filter(s => s.date === activeDate);
 
   return (
     <div className="w-full">
