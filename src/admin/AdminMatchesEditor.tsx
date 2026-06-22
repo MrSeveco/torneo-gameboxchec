@@ -180,7 +180,7 @@ export default function AdminMatchesEditor({ data }: Props) {
               </button>
             </div>
             
-            <div className="p-4 overflow-y-auto flex-1 space-y-6">
+            <div className="p-4 overflow-y-auto flex-1 min-h-0 space-y-6">
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
