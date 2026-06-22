@@ -155,7 +155,12 @@ function App() {
               </p>
               
               <button 
-                onClick={() => setShowPostponedModal(false)}
+                onClick={() => {
+                  setShowPostponedModal(false);
+                  if (config.isPostponed) {
+                    setTimeout(() => setShowPostponedModal(true), 3000);
+                  }
+                }}
                 className="w-full py-3 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface)] text-[var(--color-text-primary)] rounded-lg font-bold text-sm border border-[var(--color-surface)] hover:border-[var(--color-chec-cyan)]/50 transition-all uppercase tracking-wider"
               >
                 Entendido, ver sitio
