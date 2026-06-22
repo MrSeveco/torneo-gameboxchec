@@ -1,5 +1,6 @@
 import type { Match, Participant, MatchStatus } from '../../types/tournament';
 import { Calendar, Clock, Image as ImageIcon } from 'lucide-react';
+import { getTeamInfo } from '../../utils/teams';
 
 interface MatchCardProps {
   match: Match;
@@ -78,9 +79,21 @@ export default function MatchCard({ match, participants, isAdmin = false, onUpda
 
       <div className="flex justify-between items-center gap-4">
         {/* Jugador A */}
-        <div className="flex-1 text-right">
-          <p className="font-bold text-[var(--color-text-primary)] leading-tight">{getParticipantName(match.playerAId)}</p>
-          {match.teamA && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{match.teamA}</p>}
+        <div className="flex-1 flex flex-col items-end">
+          <p className="font-bold text-[var(--color-text-primary)] leading-tight text-right">{getParticipantName(match.playerAId)}</p>
+          {match.teamA && (() => {
+            const team = getTeamInfo(match.teamA);
+            return team ? (
+              <div className="flex items-center gap-2 mt-1.5 bg-black/20 px-2 py-1 rounded border border-[var(--color-surface-alt)] shadow-inner" title={team.name}>
+                <span className="font-black text-xs text-[var(--color-text-secondary)] tracking-wider">{team.abbr}</span>
+                {team.flagUrl ? (
+                  <img src={team.flagUrl} alt={team.name} className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm" />
+                ) : (
+                  <span className="text-[10px] text-[var(--color-text-secondary)]">{team.name}</span>
+                )}
+              </div>
+            ) : null;
+          })()}
         </div>
 
         {/* Marcador / VS */}
@@ -115,9 +128,21 @@ export default function MatchCard({ match, participants, isAdmin = false, onUpda
         </div>
 
         {/* Jugador B */}
-        <div className="flex-1 text-left">
-          <p className="font-bold text-[var(--color-text-primary)] leading-tight">{getParticipantName(match.playerBId)}</p>
-          {match.teamB && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{match.teamB}</p>}
+        <div className="flex-1 flex flex-col items-start">
+          <p className="font-bold text-[var(--color-text-primary)] leading-tight text-left">{getParticipantName(match.playerBId)}</p>
+          {match.teamB && (() => {
+            const team = getTeamInfo(match.teamB);
+            return team ? (
+              <div className="flex items-center gap-2 mt-1.5 bg-black/20 px-2 py-1 rounded border border-[var(--color-surface-alt)] shadow-inner" title={team.name}>
+                {team.flagUrl ? (
+                  <img src={team.flagUrl} alt={team.name} className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm" />
+                ) : (
+                  <span className="text-[10px] text-[var(--color-text-secondary)]">{team.name}</span>
+                )}
+                <span className="font-black text-xs text-[var(--color-text-secondary)] tracking-wider">{team.abbr}</span>
+              </div>
+            ) : null;
+          })()}
         </div>
       </div>
 

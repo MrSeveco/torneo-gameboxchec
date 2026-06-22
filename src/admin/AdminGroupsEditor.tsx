@@ -143,7 +143,7 @@ export default function AdminGroupsEditor({ data }: Props) {
               </button>
             </div>
             
-            <div className="p-4 overflow-y-auto flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-4 overflow-y-auto flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Columna Izquierda: Datos Básicos */}
               <div className="space-y-4">
@@ -199,17 +199,27 @@ export default function AdminGroupsEditor({ data }: Props) {
                   </label>
                 </div>
                 <div className="p-2 overflow-y-auto max-h-[300px] flex-1">
-                  {participants.map(p => (
-                    <label key={p.id} className="flex items-center gap-3 p-2 hover:bg-[var(--color-surface)] rounded cursor-pointer transition-colors">
-                      <input 
-                        type="checkbox"
-                        checked={formData.participantsIds?.includes(p.id) || false}
-                        onChange={() => toggleParticipant(p.id)}
-                        className="w-4 h-4 rounded text-[var(--color-gamebox-green)] focus:ring-[var(--color-gamebox-green)] bg-black/50 border-[var(--color-surface)]"
-                      />
-                      <span className="text-sm text-[var(--color-text-primary)] truncate">{p.name}</span>
-                    </label>
-                  ))}
+                  {participants.map(p => {
+                    const otherGroup = groups.find(g => g.id !== editingId && g.participantsIds.includes(p.id));
+                    const isChecked = formData.participantsIds?.includes(p.id) || false;
+                    const isDisabled = !!otherGroup;
+
+                    return (
+                      <label key={p.id} className={`flex items-center gap-3 p-2 rounded transition-colors ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[var(--color-surface)] cursor-pointer'}`}>
+                        <input 
+                          type="checkbox"
+                          checked={isChecked}
+                          disabled={isDisabled}
+                          onChange={() => !isDisabled && toggleParticipant(p.id)}
+                          className="w-4 h-4 rounded text-[var(--color-gamebox-green)] focus:ring-[var(--color-gamebox-green)] bg-black/50 border-[var(--color-surface)] disabled:cursor-not-allowed"
+                        />
+                        <div className="flex flex-col flex-1 min-w-0">
+                          <span className="text-sm text-[var(--color-text-primary)] truncate">{p.name}</span>
+                          {isDisabled && <span className="text-[10px] font-bold text-[var(--color-chec-cyan)] uppercase tracking-wider">{otherGroup.name}</span>}
+                        </div>
+                      </label>
+                    );
+                  })}
                   {participants.length === 0 && (
                     <p className="text-sm text-[var(--color-text-secondary)] text-center py-4">No hay participantes registrados.</p>
                   )}

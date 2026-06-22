@@ -73,22 +73,18 @@ function App() {
     window.location.hash = '#home';
   };
 
-  const renderPublicView = (isAdmin = false) => (
+  const renderPublicView = () => (
     <main id="inicio">
-      {!isAdmin && <Hero config={config} stats={stats} />}
+      <Hero config={config} stats={stats} />
 
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 ${isAdmin ? 'pt-24 pb-6' : 'py-16'}`}>
-        {isAdmin && (
-          <AdminDashboard onExit={handleLogout} />
-        )}
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 py-16">
         <section id="grupos" className="scroll-mt-24">
           <SectionTitle title="Grupos y Enfrentamientos" subtitle="Fase de grupos. Partidos programados y pendientes." />
           <GroupPanel
             groups={groups}
             matches={matches}
             participants={participants}
-            isAdmin={isAdmin}
+            isAdmin={false}
             onUpdateMatch={updateMatch}
           />
         </section>
@@ -99,18 +95,13 @@ function App() {
             matches={matches}
             participants={participants}
             groups={groups}
-            isAdmin={isAdmin}
+            isAdmin={false}
             onUpdateMatch={updateMatch}
           />
         </section>
 
         <section id="clasificados" className="scroll-mt-24">
           <SectionTitle title="Posiciones y Clasificados" subtitle="Clasificación actual por grupo y camino a la final." />
-          {isAdmin && (
-            <div className="mb-4 text-sm text-[var(--color-chec-blue)] font-medium bg-blue-50 p-3 rounded-lg border border-[var(--color-chec-blue)]/30 shadow-sm">
-              Nota: La tabla de clasificación y el bracket no son editables directamente. Se recalculan automáticamente al guardar resultados válidos.
-            </div>
-          )}
           <StandingsTable groups={groups} matches={matches} participants={participants} />
 
           <div className="mt-16">
@@ -121,25 +112,21 @@ function App() {
           </div>
         </section>
 
-        {!isAdmin && (
-          <>
-            <section id="cronograma" className="scroll-mt-24">
-              <SectionTitle title="Cronograma Oficial" subtitle="Horarios, logística y asignación de consolas." />
-              <Schedule schedule={schedule} matches={matches} participants={participants} groups={groups} />
-            </section>
+        <section id="cronograma" className="scroll-mt-24">
+          <SectionTitle title="Cronograma Oficial" subtitle="Horarios, logística y asignación de consolas." />
+          <Schedule schedule={schedule} matches={matches} participants={participants} groups={groups} />
+        </section>
 
-            <section id="reglamento" className="scroll-mt-24">
-              <SectionTitle title="Reglamento Técnico" subtitle="Normas rápidas para los participantes." />
-              <RulesQuickView rules={rules} />
-            </section>
-          </>
-        )}
+        <section id="reglamento" className="scroll-mt-24">
+          <SectionTitle title="Reglamento Técnico" subtitle="Normas rápidas para los participantes." />
+          <RulesQuickView rules={rules} />
+        </section>
       </div>
     </main>
   );
 
   return (
-    <div className="min-h-screen relative text-[var(--color-text-primary)] overflow-hidden">
+    <div className="min-h-screen relative text-[var(--color-text-primary)] flex flex-col">
       {/* Base Color Layer */}
       <div className="fixed inset-0 z-[-2] bg-[var(--color-bg-primary)]" />
 
@@ -182,15 +169,23 @@ function App() {
         onLogout={handleLogout}
       />
 
-      <div>
-        {currentView === 'admin' ? (
-          isAdminAuth ? renderPublicView(true) : <AdminLogin onSuccess={handleAdminSuccess} onCancel={() => window.location.hash = '#home'} />
+      {currentView === 'admin' ? (
+        isAdminAuth ? (
+          <div className="h-screen w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-[112px] pb-8 z-10 relative flex flex-col min-h-0">
+            <AdminDashboard onExit={handleLogout} />
+          </div>
         ) : (
-          renderPublicView(false)
-        )}
-      </div>
+          <div className="flex-1 z-10 relative flex items-center justify-center pt-20">
+            <AdminLogin onSuccess={handleAdminSuccess} onCancel={() => window.location.hash = '#home'} />
+          </div>
+        )
+      ) : (
+        <div className="flex-1">
+          {renderPublicView()}
+        </div>
+      )}
 
-      <Footer />
+      {currentView !== 'admin' && <Footer />}
     </div>
   );
 }

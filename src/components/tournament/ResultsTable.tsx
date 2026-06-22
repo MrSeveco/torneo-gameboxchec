@@ -1,5 +1,6 @@
 import type { Match, Participant, TournamentGroup, MatchStatus } from '../../types/tournament';
 import { Camera } from 'lucide-react';
+import { getTeamInfo } from '../../utils/teams';
 
 interface ResultsTableProps {
   matches: Match[];
@@ -82,7 +83,15 @@ export default function ResultsTable({ matches, participants, groups, isAdmin = 
                 <div className={`text-sm font-bold ${match.scoreA !== null && match.scoreA > (match.scoreB || 0) ? 'text-[var(--color-gamebox-neon)]' : 'text-[var(--color-text-primary)]'}`}>
                   {getParticipantName(match.playerAId)}
                 </div>
-                {match.teamA && <div className="text-xs text-[var(--color-text-secondary)] mt-0.5">{match.teamA}</div>}
+                {match.teamA && (() => {
+                  const team = getTeamInfo(match.teamA);
+                  return team ? (
+                    <div className="flex items-center justify-end gap-1.5 mt-1" title={team.name}>
+                      <span className="font-bold text-[10px] text-[var(--color-text-secondary)]">{team.abbr}</span>
+                      {team.flagUrl && <img src={team.flagUrl} alt={team.name} className="w-4 h-3 object-cover rounded-[1px] shadow-sm" />}
+                    </div>
+                  ) : null;
+                })()}
               </td>
               <td className="px-4 py-4 whitespace-nowrap text-center">
                 {isAdmin ? (
@@ -113,7 +122,15 @@ export default function ResultsTable({ matches, participants, groups, isAdmin = 
                 <div className={`text-sm font-bold ${match.scoreB !== null && match.scoreB > (match.scoreA || 0) ? 'text-[var(--color-gamebox-neon)]' : 'text-[var(--color-text-primary)]'}`}>
                   {getParticipantName(match.playerBId)}
                 </div>
-                {match.teamB && <div className="text-xs text-[var(--color-text-secondary)] mt-0.5">{match.teamB}</div>}
+                {match.teamB && (() => {
+                  const team = getTeamInfo(match.teamB);
+                  return team ? (
+                    <div className="flex items-center justify-start gap-1.5 mt-1" title={team.name}>
+                      {team.flagUrl && <img src={team.flagUrl} alt={team.name} className="w-4 h-3 object-cover rounded-[1px] shadow-sm" />}
+                      <span className="font-bold text-[10px] text-[var(--color-text-secondary)]">{team.abbr}</span>
+                    </div>
+                  ) : null;
+                })()}
               </td>
               <td className="px-4 py-4 whitespace-nowrap text-center">
                 {isAdmin ? (

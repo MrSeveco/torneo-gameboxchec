@@ -157,7 +157,7 @@ export default function AdminParticipantsEditor({ data }: Props) {
               </button>
             </div>
             
-            <div className="p-4 overflow-y-auto space-y-4">
+            <div className="p-4 overflow-y-auto flex-1 min-h-0 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Nombre Completo</label>
                 <input 

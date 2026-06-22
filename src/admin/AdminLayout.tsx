@@ -38,7 +38,7 @@ export default function AdminLayout({ children, activeTab, onTabChange, onExit }
   };
 
   return (
-    <div className="flex h-[calc(100vh-80px)] bg-[var(--color-bg-primary)] overflow-hidden border-t border-[var(--color-surface-alt)]">
+    <div className="flex flex-1 min-h-0 bg-[var(--color-bg-primary)]/95 backdrop-blur-md overflow-hidden border border-[var(--color-surface-alt)] shadow-2xl rounded-2xl">
       
       {/* Mobile Sidebar Overlay */}
       {mobileMenuOpen && (
