@@ -29,6 +29,8 @@ export default function AdminMatchesEditor({ data }: Props) {
         round: 'Fase de grupos',
         playerAId: null,
         playerBId: null,
+        teamA: '',
+        teamB: '',
         scoreA: null,
         scoreB: null,
         date: '',
@@ -126,6 +128,7 @@ export default function AdminMatchesEditor({ data }: Props) {
                 <p className="text-sm md:text-base font-bold text-[var(--color-text-primary)] break-words leading-tight" title={getParticipantName(m.playerAId)}>
                   {getParticipantName(m.playerAId)}
                 </p>
+                {m.teamA && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{m.teamA}</p>}
               </div>
               <div className="flex-shrink-0 flex items-center justify-center bg-[var(--color-surface)] px-4 py-2 rounded-lg border border-[var(--color-surface-alt)] shadow-inner min-w-[80px]">
                 <span className="text-xl font-black text-[var(--color-gamebox-neon)] tracking-widest">
@@ -136,6 +139,7 @@ export default function AdminMatchesEditor({ data }: Props) {
                 <p className="text-sm md:text-base font-bold text-[var(--color-text-primary)] break-words leading-tight" title={getParticipantName(m.playerBId)}>
                   {getParticipantName(m.playerBId)}
                 </p>
+                {m.teamB && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{m.teamB}</p>}
               </div>
             </div>
 
@@ -225,6 +229,15 @@ export default function AdminMatchesEditor({ data }: Props) {
                       <option value="">-- Por definir --</option>
                       {filteredParticipants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                     </select>
+                    <div className="mt-2">
+                      <input 
+                        type="text" 
+                        value={formData.teamA || ''} 
+                        onChange={e => setFormData({...formData, teamA: e.target.value})}
+                        className="w-full bg-[var(--color-bg-primary)] border border-[var(--color-surface)] text-[var(--color-text-primary)] text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-[var(--color-gamebox-green)]"
+                        placeholder="Equipo / País"
+                      />
+                    </div>
                     <div className="mt-2 text-center">
                       <input 
                         type="number" min="0" max="99"
@@ -249,6 +262,15 @@ export default function AdminMatchesEditor({ data }: Props) {
                       <option value="">-- Por definir --</option>
                       {filteredParticipants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                     </select>
+                    <div className="mt-2">
+                      <input 
+                        type="text" 
+                        value={formData.teamB || ''} 
+                        onChange={e => setFormData({...formData, teamB: e.target.value})}
+                        className="w-full bg-[var(--color-bg-primary)] border border-[var(--color-surface)] text-[var(--color-text-primary)] text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-[var(--color-gamebox-green)]"
+                        placeholder="Equipo / País"
+                      />
+                    </div>
                     <div className="mt-2 text-center">
                       <input 
                         type="number" min="0" max="99"

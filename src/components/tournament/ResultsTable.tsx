@@ -82,6 +82,7 @@ export default function ResultsTable({ matches, participants, groups, isAdmin = 
                 <div className={`text-sm font-bold ${match.scoreA !== null && match.scoreA > (match.scoreB || 0) ? 'text-[var(--color-gamebox-neon)]' : 'text-[var(--color-text-primary)]'}`}>
                   {getParticipantName(match.playerAId)}
                 </div>
+                {match.teamA && <div className="text-xs text-[var(--color-text-secondary)] mt-0.5">{match.teamA}</div>}
               </td>
               <td className="px-4 py-4 whitespace-nowrap text-center">
                 {isAdmin ? (
@@ -112,6 +113,7 @@ export default function ResultsTable({ matches, participants, groups, isAdmin = 
                 <div className={`text-sm font-bold ${match.scoreB !== null && match.scoreB > (match.scoreA || 0) ? 'text-[var(--color-gamebox-neon)]' : 'text-[var(--color-text-primary)]'}`}>
                   {getParticipantName(match.playerBId)}
                 </div>
+                {match.teamB && <div className="text-xs text-[var(--color-text-secondary)] mt-0.5">{match.teamB}</div>}
               </td>
               <td className="px-4 py-4 whitespace-nowrap text-center">
                 {isAdmin ? (

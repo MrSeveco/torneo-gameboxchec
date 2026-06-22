@@ -45,6 +45,8 @@ export interface Match {
   playerBId: string | null;
   scoreA: number | null;
   scoreB: number | null;
+  teamA?: string;
+  teamB?: string;
   date: string;
   time: string;
   platform: PlatformType;

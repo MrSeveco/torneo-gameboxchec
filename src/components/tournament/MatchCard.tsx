@@ -80,6 +80,7 @@ export default function MatchCard({ match, participants, isAdmin = false, onUpda
         {/* Jugador A */}
         <div className="flex-1 text-right">
           <p className="font-bold text-[var(--color-text-primary)] leading-tight">{getParticipantName(match.playerAId)}</p>
+          {match.teamA && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{match.teamA}</p>}
         </div>
 
         {/* Marcador / VS */}
@@ -116,6 +117,7 @@ export default function MatchCard({ match, participants, isAdmin = false, onUpda
         {/* Jugador B */}
         <div className="flex-1 text-left">
           <p className="font-bold text-[var(--color-text-primary)] leading-tight">{getParticipantName(match.playerBId)}</p>
+          {match.teamB && <p className="text-xs text-[var(--color-text-secondary)] mt-1">{match.teamB}</p>}
         </div>
       </div>
 

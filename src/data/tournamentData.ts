@@ -78,7 +78,7 @@ const defaultSchedule: ScheduleItem[] = [
 ];
 
 const defaultMatches: Match[] = [
-  { id: 'm1', groupId: 'g1', round: 'Fase de grupos', playerAId: 'p1', playerBId: 'p2', scoreA: null, scoreB: null, date: '22 de junio', time: '07:00 PM', platform: 'Por definir', status: 'Pendiente', evidence: 'Pendiente de reporte', notes: '' },
+  { id: 'm1', groupId: 'g1', round: 'Fase de grupos', playerAId: 'p1', playerBId: 'p2', teamA: 'Brasil', teamB: 'Colombia', scoreA: null, scoreB: null, date: '22 de junio', time: '07:00 PM', platform: 'Por definir', status: 'Pendiente', evidence: 'Pendiente de reporte', notes: '' },
   { id: 'm2', groupId: 'g1', round: 'Fase de grupos', playerAId: 'p3', playerBId: 'p4', scoreA: null, scoreB: null, date: '22 de junio', time: '07:30 PM', platform: 'Por definir', status: 'Pendiente', evidence: 'Pendiente de reporte', notes: '' },
   { id: 'm3', groupId: 'g2', round: 'Fase de grupos', playerAId: 'p13', playerBId: 'p14', scoreA: null, scoreB: null, date: '24 de junio', time: '07:00 PM', platform: 'Por definir', status: 'Pendiente', evidence: 'Pendiente de reporte', notes: '' },
   { id: 'm4', groupId: 'g3', round: 'Fase de grupos', playerAId: 'p24', playerBId: null, scoreA: null, scoreB: null, date: '25 de junio', time: '07:00 PM', platform: 'Por definir', status: 'Pendiente', evidence: 'Pendiente de reporte', notes: '' }
