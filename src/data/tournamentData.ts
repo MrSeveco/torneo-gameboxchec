@@ -102,7 +102,8 @@ export const initialTournamentData: TournamentData = {
     status: "Planeación",
     visibleSections: {
       hero: true, groups: true, vs: true, results: true, standings: true, qualified: true, bracket: true, schedule: true, rules: true, logistics: true
-    }
+    },
+    isPostponed: false
   },
   theme: {
     theme: 'Oscuro gamer',

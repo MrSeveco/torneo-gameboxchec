@@ -174,6 +174,7 @@ export interface TournamentConfig {
     rules: boolean;
     logistics: boolean;
   };
+  isPostponed?: boolean;
 }
 
 export interface TournamentThemeConfig {

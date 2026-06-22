@@ -59,6 +59,21 @@ export default function AdminGeneralSettings({ data }: Props) {
               <option value="Finalizado">Finalizado</option>
             </select>
           </div>
+
+          <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+            <label className="flex items-center gap-2 text-sm font-bold text-red-400 cursor-pointer">
+              <input 
+                type="checkbox"
+                checked={!!config.isPostponed}
+                onChange={(e) => handleChange('isPostponed', e.target.checked)}
+                className="rounded border-red-500/50 text-red-500 focus:ring-red-500 bg-black/50"
+              />
+              Activar Alerta de "Torneo Aplazado"
+            </label>
+            <p className="text-xs text-red-400/80 mt-1 ml-6">
+              Muestra un mensaje global a todos los visitantes.
+            </p>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">Secciones Visibles al Público</label>

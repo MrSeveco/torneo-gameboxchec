@@ -19,6 +19,7 @@ import bgImage from './assets/background.png';
 function App() {
   const [currentView, setCurrentView] = useState<'public' | 'admin'>('public');
   const [isAdminAuth, setIsAdminAuth] = useState(false);
+  const [showPostponedModal, setShowPostponedModal] = useState(false);
 
   const {
     config,
@@ -32,6 +33,14 @@ function App() {
     hasUnsavedChanges,
     updateMatch
   } = useTournamentData();
+
+  useEffect(() => {
+    if (config.isPostponed) {
+      setShowPostponedModal(true);
+    } else {
+      setShowPostponedModal(false);
+    }
+  }, [config.isPostponed]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -139,6 +148,35 @@ function App() {
         className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-30"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
+
+      {/* Modal de Torneo Aplazado */}
+      {showPostponedModal && (
+        <div className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-300 backdrop-blur-sm">
+          <div className="bg-[var(--color-bg-primary)] rounded-xl w-full max-w-md shadow-2xl border border-red-500/50 flex flex-col overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 to-red-400"></div>
+            
+            <div className="p-8 text-center">
+              <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                <span className="text-4xl">⚠️</span>
+              </div>
+              <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-3 uppercase tracking-wide">
+                Torneo Aplazado
+              </h2>
+              <p className="text-[var(--color-text-secondary)] mb-8 text-sm md:text-base leading-relaxed">
+                Por novedades logísticas, el evento ha sido <strong className="text-red-400">aplazado hasta nuevo aviso</strong>. 
+                Pronto estaremos publicando las nuevas fechas a través de los canales oficiales.
+              </p>
+              
+              <button 
+                onClick={() => setShowPostponedModal(false)}
+                className="w-full py-3 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface)] text-[var(--color-text-primary)] rounded-lg font-bold text-sm border border-[var(--color-surface)] hover:border-[var(--color-chec-cyan)]/50 transition-all uppercase tracking-wider"
+              >
+                Entendido, ver sitio
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Header
         isAdmin={isAdminAuth && currentView === 'admin'}
         onLogout={handleLogout}
