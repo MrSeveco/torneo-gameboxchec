@@ -17,6 +17,7 @@ export default function AdminMatchesEditor({ data }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Partial<Match>>({});
+  const [activeTab, setActiveTab] = useState<string>('all');
 
   const handleOpenModal = (match?: Match) => {
     if (match) {
@@ -102,8 +103,37 @@ export default function AdminMatchesEditor({ data }: Props) {
         </button>
       </div>
 
+      {/* Pestañas de filtrado */}
+      <div className="flex overflow-x-auto gap-2 mb-6 pb-2 custom-scrollbar">
+        <button
+          onClick={() => setActiveTab('all')}
+          className={`px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-colors ${activeTab === 'all' ? 'bg-[var(--color-gamebox-green)] text-[var(--color-bg-primary)]' : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-alt)] border border-[var(--color-surface-alt)]'}`}
+        >
+          Todos los Partidos
+        </button>
+        {groups.map(g => (
+          <button
+            key={g.id}
+            onClick={() => setActiveTab(g.id)}
+            className={`px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-colors ${activeTab === g.id ? 'bg-[var(--color-gamebox-green)] text-[var(--color-bg-primary)]' : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-alt)] border border-[var(--color-surface-alt)]'}`}
+          >
+            {g.name}
+          </button>
+        ))}
+        <button
+          onClick={() => setActiveTab('knockout')}
+          className={`px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-colors ${activeTab === 'knockout' ? 'bg-[var(--color-gamebox-green)] text-[var(--color-bg-primary)]' : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-alt)] border border-[var(--color-surface-alt)]'}`}
+        >
+          Fases Finales
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {matches.map(m => (
+        {matches.filter(m => {
+          if (activeTab === 'all') return true;
+          if (activeTab === 'knockout') return !m.groupId;
+          return m.groupId === activeTab;
+        }).map(m => (
           <div key={m.id} className="bg-[var(--color-surface-alt)] border border-[var(--color-surface)] rounded-xl p-5 shadow-md hover:shadow-lg hover:border-[var(--color-chec-cyan)]/40 transition-all">
             
             <div className="flex justify-between items-center mb-4 border-b border-[var(--color-surface)] pb-3">
@@ -160,9 +190,13 @@ export default function AdminMatchesEditor({ data }: Props) {
             </div>
           </div>
         ))}
-        {matches.length === 0 && (
+        {matches.filter(m => {
+          if (activeTab === 'all') return true;
+          if (activeTab === 'knockout') return !m.groupId;
+          return m.groupId === activeTab;
+        }).length === 0 && (
           <div className="col-span-full py-12 text-center text-[var(--color-text-secondary)] bg-[var(--color-surface-alt)] rounded-xl border border-dashed border-[var(--color-surface)]">
-            No hay partidos creados en el torneo.
+            No hay partidos creados para esta categoría.
           </div>
         )}
       </div>
